@@ -1,3 +1,5 @@
+// deprecated 10/2017
+
 var jsdom = require("jsdom");
 var fs = require('fs');
 
@@ -7,7 +9,7 @@ jsdom.env({
         global.window = window;
         global.document = window.document;
         // now you can work on parsing HTML as you normally would in a browser
-        // e.g. this will work  
+        // e.g. this will work
         scrape();
     }
 });
@@ -29,9 +31,13 @@ function scrape() {
     	body: a.children[1].children[1].children[0].innerHTML
     }));
 
-    var outputFilename = '../app/data/marshuang.json';
-        
-    fs.writeFile(outputFilename, JSON.stringify(mapped), function(err) {
+    const oldJSON = require('../app/data/marshuang.json');
+
+    const newJSON = [...oldJSON, ...mapped];
+
+    var outputFilename = '../app/data/marshuangUpdated.json';
+
+    fs.writeFile(outputFilename, JSON.stringify(newJSON), function(err) {
         if(err) {
           console.log(err);
         } else {
