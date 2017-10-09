@@ -1,10 +1,14 @@
+// This script is for scraping text off pdfs for rawText.json, to be used for search
+// Note that when rawText.json grows too large. Search should be moved to services like ElasticSearch (TODO)
+
 const fs = require('fs'),
     PDFParser = require("pdf2json");
 
     fs.readdir('../pdf', (err, files) => {
         let count = 0;
+        console.log(`Found ${files.length + 1} pdfs`);
         setInterval(() => {
-            if (count < 1) {
+            if (count < files.length) {
                 let pdfParser = new PDFParser();
 
                 pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError) );
